@@ -1,0 +1,10 @@
+syntax = "proto3";
+package pb.article;
+option go_package = "pb/article";
+
+import "article-service/pb/article/general.proto";
+import "article-service/pb/article/article.proto";
+
+service ArticleService {
+  rpc FindArticleByID(FindByIDRequest) returns (Article) {}
+}

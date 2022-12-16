@@ -1,0 +1,11 @@
+syntax = "proto3";
+package pb.article;
+option go_package = "pb/article";
+
+message Article {
+  int32 id = 1;
+  string author = 2;
+  string title = 3;
+  string body = 4;
+  string created_at = 5;
+}

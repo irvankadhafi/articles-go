@@ -1,0 +1,45 @@
+version: '3'
+
+volumes:
+  postgres_db: {}
+  elastic_db: {}
+  redis_db: {}
+
+networks:
+  bridge:
+
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=alpha
+      - POSTGRES_PASSWORD=irvankdhf
+      - POSTGRES_DB=article_service
+    volumes:
+      - "postgres_db:/var/lib/postgresql/data"
+    stdin_open: true
+    networks:
+      - bridge
+    ports:
+      - "25432:5432"
+  elastic:
+    image: elasticsearch:7.10.1
+    networks:
+      - bridge
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "19200:9200"
+    volumes:
+      - "elastic_db:/usr/share/elasticsearch/data"
+  redis:
+    image: redis:5.0
+    networks:
+      - bridge
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - "16379:6379"
+    volumes:
+      - "redis_db:/data"
